@@ -1,0 +1,14 @@
+name: Test resolv.conf
+on:
+  - push
+jobs:
+  test:
+    name: Test resolv.conf replacment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Check out rails
+      run: |
+        docker build -t test .
+        docker run --rm -t test mount && umount -c /etc/resolv.conf && mount && ls -l /etc/resolv.conf && cat /etc/resolv.conf
